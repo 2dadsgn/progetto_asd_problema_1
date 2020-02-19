@@ -14,6 +14,7 @@
 #include <fstream>
 #include "hash.h"
 #include "disjointset.h"
+#include "Cella.h"
 
 using namespace std;
 
@@ -126,14 +127,14 @@ int Hash_Table::get_hash_index( int key){
         case 1:
             //prima funzione HASH divisione
             indice = metodo_divisione(key,m);
-            cout<<"divisione: "<<indice<<endl;
+            //cout<<"indice prodotto da divisione: "<<indice<<endl;
 
             break;
 
         case 2:
             //seconda funzione hash moltiplicazione
             indice = metodo_moltiplicazione(key,m);
-            cout<<"moltiplicazione: "<<indice<<endl;
+            //cout<<"indice proddotto da moltiplicazione: "<<indice<<endl;
             break;
     }
 
@@ -171,21 +172,34 @@ bool Hash_Table::get_input_from_file(){
     // ottiene indice hash max e inizializza ''m''
     get_hash_index(this->numero_elementi_input);
 
-    //inizializzo vettore sufficientemente grande a contenere tutto con indice generato da f hash
-    this->vettore.reserve(this->m);
+    //inizializzo vettore sufficientemente grande a contenere tutto con indice generato da funzione hash
+    for (int i=0;i<this->m;i++){
+        //inserisce linked list vuote per allocare spazio
+        vettore.push_back(Linked_List());
+    }
 
-    //prelevo linee
+    //prelevo linee e inserisco in vettore
     while(getline(file,line)){
         //rilevo lo spazio di mezzo a key e value_in
 
         indice_virgola  = line.find(',');
 
-
         //ottengo la key
         key = stoi(line.substr(0,indice_virgola));
 
         //ottengo la stringa
-        value = line.substr(indice_virgola);
+        value = line.substr(++indice_virgola);
+
+        //inserisco dati
+        try{
+            this->insert(key,value);
+        }
+        catch (exception e){
+            cout<<endl;
+            cout<<"--errore  in inserimento dati "<<e.what()<<endl;
+            cout<<endl;
+        }
+
 
     }
 
@@ -212,12 +226,75 @@ Hash_Table::Hash_Table( string nome_file_in){
     catch(...){
         cout<<"errore in input da file"<<endl;
     }
-    cout<<this->vettore.capacity()<<endl;
+    cout<<"capacity: "<<this->vettore.capacity()<<endl;
+}
+
+void Hash_Table::PrintOut(){
+    //iteratore per scorrere il vettore
+    vector <Linked_List>::iterator iteratore = vettore.begin();
+    while(iteratore != vettore.end()){
+        Cella* itr_cella = iteratore->get_testa();
+        //itero le celle all'interno della linked list
+        while(itr_cella != nullptr){
+
+            Nodo<Insieme>* itr;
+            itr  = itr_cella->get_insieme()->get_head();
+
+            cout<<itr->get_key()<<" - ";
+            itr_cella = itr_cella->get_next();
+
+        }
+        cout<<endl;
+        iteratore++;
+    }
 }
 
 
+void Hash_Table::insert(int key, string value ){
+
+    //creo l'oggetto insieme con i dati appena estratti
+    //e inserisco nell'oggetto linked lsit
+    //il quale si occupa di trovare la giusta locazione per tali dati
+    this->vettore.at(get_hash_index(key)).ins(new Insieme (key,value));
+
+}
+//ricerca del key-value nella tavola
+Insieme* Hash_Table::research(int key, string value ){
+
+    //iteratore per scorrere il vettore
+    vector <Linked_List>::iterator iteratore = vettore.begin();
+    while(iteratore != vettore.end()){
+        Cella* itr_cella = iteratore->get_testa();
+
+        //itero le celle all'interno della linked list
+        while(itr_cella != nullptr){
+
+            Nodo<Insieme>* itr;
+            itr  = itr_cella->get_insieme()->get_head();
+
+            //nel momento dell'occorrenza esce e ritorna il ptr all insieme
+            if(itr->get_key() == key && itr->get_value() == value){
+                cout<<"trovato"<<endl;
+                return itr->get_insieme();
+            }
+            itr_cella = itr_cella->get_next();
+        }
+
+        iteratore++;
+    }
+}
 
 
+Insieme* Hash_Table::make_set(int key, string value){
+    //inserisco l'insieme nella Cella nell'indice del vettore generato
+    return new Insieme(key,value);
+}
+
+void Hash_Table::callable_find_set(int key, string value){
+    Insieme* ptr = this->research(key,value);
+    cout<<"Il rappresentante dell'insieme è il nodo di key: "<<ptr->get_head()->get_key()<<" e di value :"<<ptr->get_head()->get_value()<<endl;
+
+};
 
 
 #endif

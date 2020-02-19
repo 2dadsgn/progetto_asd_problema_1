@@ -13,6 +13,7 @@ int main(){
 
 
     Hash_Table  tavola("../file.txt");
+    tavola.PrintOut();
 
 
 

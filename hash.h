@@ -20,34 +20,40 @@ using namespace std;
 // e l'inserimento degli elementi
 
 class Hash_Table{
-    //sostituire insieme  con tipo Cella
-    vector <Cella<Insieme>*> vettore;
+private:
+    vector <Linked_List> vettore;
     string metodo_hashing;         //variabile per memorizzare il metodo hashing utilizzato
     int m;                         //m per il calcolo dell'indice
     string nome_file;
     int numero_elementi_input;
 
+    void insert(int key, string value);
 
-public:
+    Insieme* research(int key, string value);
+
+    //legge il file contenuto nella variabile nome_file
     bool get_input_from_file();
+
+    //tramite la key inserita genera l indice scegliendo una funzione hash random
     int get_hash_index( int key);
-    Hash_Table(string nome_file);
 
-    void get_used_memory();
-
-    template  <typename I>
-    void make_set(int key, string value);
     void union_nodes(int key, int key2);
     Insieme* find_set(int key);
 
+public:
+
+    //costruttore
+    Hash_Table(string nome_file);
+
+    //funzioni insiemi disgiunti
+    Insieme* make_set(int key, string value);
+
+    //view hash table
+    void PrintOut();
+
+    //funzione pubblica di findset
+    void callable_find_set(int key, string value);
 };
-
-
-template  <typename I>
-void Hash_Table::make_set(int key, string value){
-    //inserisco l'insieme nella Cella nell'indice del vettore generato
-    this->vettore.at(get_hash_index(key)) = new Cella<I>(new Insieme(key,value));
-}
 
 
 

@@ -5,43 +5,8 @@
 
 #include <string>
 #include "disjointset.h"
+#include <iostream>
 using namespace std;
-
-
-//---------------------- funzioni della classe Nodo  -----------------------------------
-
-//get key
-template <typename I>
-int Nodo<I>::get_key(){
-    return this->key;
-}
-
-//get value
-template <typename I>
-string Nodo<I>::get_value(){
-    return this->value;
-}
-
-//inserisce key
-template <typename I>
-void Nodo<I>::set_key(int input){
-    this->key=input;
-}
-//inserisce value
-template <typename I>
-void Nodo<I>::set_value(string input){
-    this->value=input;
-}
-
-
-//costruttore
-template <typename I>
-Nodo<I>::Nodo(){
-    this->set_next(nullptr);
-    this->set_insieme(nullptr);
-    this->set_key(-999);
-    this->set_value("");
-}
 
 //---------------------- funzioni della classe insieme  -----------------------------------
 
@@ -77,6 +42,7 @@ Insieme::Insieme(int key_in, string value_in){
     head->set_value(value_in);
     head->set_insieme(this);
     this->set_rank(0);
+
 }
 
 //costruttore con inizializzazione
