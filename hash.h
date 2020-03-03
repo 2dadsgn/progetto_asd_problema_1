@@ -29,7 +29,15 @@ private:
 
     void insert(int key, string value);
 
-    Insieme* research(int key, string value);
+    Cella<Linked_List>* research(int key, string value);
+
+    int ricerca_estremi(int m);
+
+    bool is_primo(int n);
+
+    int metodo_moltiplicazione(int key, int m);
+
+    int metodo_divisione(int key, int m);
 
     //legge il file contenuto nella variabile nome_file
     bool get_input_from_file();
@@ -37,8 +45,8 @@ private:
     //tramite la key inserita genera l indice scegliendo una funzione hash random
     int get_hash_index( int key);
 
-    void union_nodes(int key, int key2);
-    Insieme* find_set(int key);
+    void union_nodes(Insieme* s1, Insieme* s2);
+    Nodo<Insieme>* find_set(Insieme* s1);
 
 public:
 
@@ -53,6 +61,14 @@ public:
 
     //funzione pubblica di findset
     void callable_find_set(int key, string value);
+
+    void callable_union(int key1, string value1, int key2, string value2);
+    void callable_make_set(int key, string value);
+
+    void menu();
+
+    //stampa l'insieme
+    void print_insieme();
 };
 
 

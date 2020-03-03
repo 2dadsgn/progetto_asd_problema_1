@@ -11,10 +11,8 @@ using namespace std;
 
 int main(){
 
-
     Hash_Table  tavola("../file.txt");
-    tavola.PrintOut();
+    tavola.menu();
 
-
-
+    return 0;
 }
