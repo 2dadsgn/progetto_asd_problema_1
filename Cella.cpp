@@ -112,16 +112,13 @@ void Linked_List::del_cella(Cella<Linked_List>* cella_in){
             //allora la cella è unica
             cella_in->get_lista()->set_coda(nullptr);
             cella_in->get_lista()->set_testa(nullptr);
-            cout<<"la cella era l'unica della lista"<<endl;
+
         }
         else{
             //altrimenti la cella successiva diviene la nuova testa della lista
             ptr = cella_in->get_next();//successivo di cella_in
             ptr->set_prev(nullptr);
             cella_in->get_lista()->set_testa(ptr);
-
-
-            cout<<"la cella era la testa ma non l'unica "<<cella_in<<endl;
         }
     }
     else if ( cella_in->get_next() == nullptr){
@@ -129,13 +126,13 @@ void Linked_List::del_cella(Cella<Linked_List>* cella_in){
         ptr = cella_in->get_prev();
         ptr->set_next(nullptr);
         cella_in->get_lista()->set_coda(ptr);
-        cout<<"la cella era la coda"<<endl;
+
     }
     else{
         //altrimenti la cella è una celle di mezzo
         cella_in->get_prev()->set_next(cella_in->get_next());
         cella_in->get_next()->set_prev(cella_in->get_prev());
-        cout<<"la cella era inmezzo"<<endl;
+
     }
 
 }
