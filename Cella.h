@@ -6,7 +6,7 @@
 #ifndef PROGETTO_ASD_PROBLEMA_1_CELLA_H
 #define PROGETTO_ASD_PROBLEMA_1_CELLA_H
 
-#include "header.h"
+
 #include "disjointset.h"
 
 

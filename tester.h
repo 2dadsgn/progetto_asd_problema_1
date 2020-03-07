@@ -33,12 +33,13 @@ public:
     void create(){
         srand(time(NULL));
         int b = rand() % 9000;
+        int t = rand() % 9000+1000;
         int c=0;
 
         fstream file;
         file.open("../tester.txt",std::ofstream::out | std::ofstream::trunc);
 
-        while(c<b){
+        while(c<t){
             b = rand() % 2000;
             file<<b<<","<<this->random_string(10)<<endl;
             c++;

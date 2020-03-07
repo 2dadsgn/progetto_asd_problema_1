@@ -6,7 +6,7 @@
 #define PROGETTO_ASD_PROBLEMA_1_DISJOINTSET_H
 
 #include <string>
-#include "header.h"
+
 using namespace std;
 
 
